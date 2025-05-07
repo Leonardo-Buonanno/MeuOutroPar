@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprar Calçado - MEU OUTRO PAR</title>
+    <link rel="stylesheet" href="/CSS/compra.css">
+</head>
+<body>
+    <header>
+        <h1>MEU OUTRO PAR</h1>
+        <p class="tagline">Conectando quem precisa com quem tem</p>
+    </header>
+    
+    <nav role="navigation">
+        <ul>
+            <li><a href="/index.html">Sobre</a></li>
+            <li><a href="/HTML/compra.html" aria-current="page">Compra</a></li>
+            <li><a href="/HTML/venda.html">Venda</a></li>
+            <li><a href="/HTML/login.html">Login</a></li>
+            <li><a href="/HTML/cadastro.html">Cadastro</a></li>
+            <li><a href="/HTML/meus-anuncios.html">Meus anúncios</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <div id="feedback" class="feedback" style="display: none;"></div>
+        
+        <div class="compra-container">
+            <h2 class="compra-title">Calçados Disponíveis</h2>
+            
+            <div class="filtros">
+                <div class="filtro-group">
+                    <label for="filtro-lado">Lado:</label>
+                    <select id="filtro-lado">
+                        <option value="todos">Todos</option>
+                        <option value="esquerdo">Pé Esquerdo</option>
+                        <option value="direito">Pé Direito</option>
+                    </select>
+                </div>
+                
+                <div class="filtro-group">
+                    <label for="filtro-tamanho">Tamanho:</label>
+                    <select id="filtro-tamanho">
+                        <option value="todos">Todos</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24</option>
+                        <option value="25">25</option>
+                        <option value="26">26</option>
+                        <option value="27">27</option>
+                        <option value="28">28</option>
+                        <option value="29">29</option>
+                        <option value="30">30</option>
+                        <option value="31">31</option>
+                        <option value="32">32</option>
+                        <option value="33">33</option>
+                        <option value="34">34</option>
+                        <option value="35">35</option>
+                        <option value="36">36</option>
+                        <option value="37">37</option>
+                        <option value="38">38</option>
+                        <option value="39">39</option>
+                        <option value="40">40</option>
+                        <option value="41">41</option>
+                        <option value="42">42</option>
+                        <option value="43">43</option>
+                        <option value="44">44</option>
+                        <option value="45">45</option>
+                        <option value="46">46</option>
+                        <option value="47">47</option>
+                        <option value="48">48</option>
+                        <option value="49">49</option>
+                        <option value="50">50</option>
+                        <option value="51">51</option>
+                        <option value="52">52</option>
+                        <option value="53">53</option>
+                        <option value="54">54</option>
+                        <option value="55">55</option>
+                    </select>
+                </div>
+                
+                <button id="aplicar-filtros" class="btn-filtrar">Filtrar</button>
+            </div>
+            
+            <div id="lista-calcados" class="lista-calcados">
+                <!-- Os calçados serão carregados aqui via JavaScript -->
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; <span id="current-year"></span> MEU OUTRO PAR. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // Atualiza o ano no footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Função para mostrar feedback
+        function mostrarFeedback(mensagem, tipo) {
+            const feedback = document.getElementById('feedback');
+            feedback.textContent = mensagem;
+            feedback.className = `feedback ${tipo}`;
+            feedback.style.display = 'block';
+            
+            setTimeout(() => {
+                feedback.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Função para carregar os calçados
+        function carregarCalcados(filtroLado = 'todos', filtroTamanho = 'todos') {
+            const listaCalcados = document.getElementById('lista-calcados');
+            
+            // Recupera os anúncios do localStorage
+            const anunciosSalvos = localStorage.getItem('anunciosCalcados');
+            const anuncios = anunciosSalvos ? JSON.parse(anunciosSalvos) : [];
+            
+            // Limpa a lista antes de carregar
+            listaCalcados.innerHTML = '';
+            
+            if (anuncios.length === 0) {
+                listaCalcados.innerHTML = '<p class="sem-resultados">Nenhum calçado disponível no momento.</p>';
+                return;
+            }
+            
+            // Aplica filtros
+            const calcadosFiltrados = anuncios.filter(calcado => {
+                const ladoMatch = filtroLado === 'todos' || calcado.lado === filtroLado;
+                const tamanhoMatch = filtroTamanho === 'todos' || calcado.tamanho.toString() === filtroTamanho;
+                return ladoMatch && tamanhoMatch;
+            });
+            
+            if (calcadosFiltrados.length === 0) {
+                listaCalcados.innerHTML = '<p class="sem-resultados">Nenhum calçado encontrado com os filtros selecionados.</p>';
+                return;
+            }
+            
+            // Cria os cards para cada calçado
+            calcadosFiltrados.forEach(calcado => {
+                const calcadoElement = document.createElement('div');
+                calcadoElement.className = 'calcado-card';
+                calcadoElement.innerHTML = `
+                    <div class="calcado-imagem">
+                        <img src="${calcado.foto || 'https://via.placeholder.com/200x150?text=Sem+Imagem'}" alt="${calcado.modelo}">
+                    </div>
+                    <div class="calcado-info">
+                        <h3>${calcado.modelo}</h3>
+                        <p><strong>Lado:</strong> Pé ${calcado.lado === 'esquerdo' ? 'Esquerdo' : 'Direito'}</p>
+                        <p><strong>Tamanho:</strong> ${calcado.tamanho}</p>
+                        <p><strong>Cor:</strong> ${calcado.cor}</p>
+                        <p><strong>Valor:</strong> R$ ${calcado.valor}</p>
+                        <p><strong>Anunciado em:</strong> ${calcado.dataAnuncio}</p>
+                        <p>${calcado.descricao || 'Sem descrição adicional.'}</p>
+                        <button class="btn-interesse" data-id="${calcado.id}">Tenho Interesse</button>
+                    </div>
+                `;
+                listaCalcados.appendChild(calcadoElement);
+            });
+            
+            // Adiciona eventos aos botões de interesse
+            adicionarEventosInteresse();
+        }
+        
+        // Função para adicionar eventos aos botões de interesse
+        function adicionarEventosInteresse() {
+            document.querySelectorAll('.btn-interesse').forEach(button => {
+                button.addEventListener('click', function() {
+                    const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+                    
+                    if (!usuarioLogado) {
+                        mostrarFeedback('Você precisa estar logado para entrar em contato.', 'erro');
+                        setTimeout(() => {
+                            window.location.href = 'login.html';
+                        }, 2500);
+                        return;
+                    }
+                    
+                    const id = this.getAttribute('data-id');
+                    const anuncios = JSON.parse(localStorage.getItem('anunciosCalcados')) || [];
+                    const anuncio = anuncios.find(a => a.id === id);
+                    
+                    if (anuncio && anuncio.whatsapp) {
+                        const mensagem = `Olá, vi seu anúncio no MEU OUTRO PAR e estou interessado no calçado:\n\n` +
+                                        `*Modelo:* ${anuncio.modelo}\n` +
+                                        `*Tamanho:* ${anuncio.tamanho}\n` +
+                                        `*Lado:* Pé ${anuncio.lado === 'esquerdo' ? 'Esquerdo' : 'Direito'}\n` +
+                                        `*Valor:* R$ ${anuncio.valor}\n\n` +
+                                        `Podemos conversar sobre?`;
+                        
+                        const linkWhatsApp = `https://wa.me/${anuncio.whatsapp}?text=${encodeURIComponent(mensagem)}`;
+                        window.open(linkWhatsApp, '_blank');
+                    } else {
+                        mostrarFeedback('Não foi possível encontrar o contato do vendedor.', 'erro');
+                    }
+                });
+            });
+        }
+        
+        // Evento para aplicar filtros
+        document.getElementById('aplicar-filtros').addEventListener('click', function() {
+            const lado = document.getElementById('filtro-lado').value;
+            const tamanho = document.getElementById('filtro-tamanho').value;
+            carregarCalcados(lado, tamanho);
+        });
+        
+        // Carrega os calçados quando a página é aberta
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarCalcados();
+        });
+    </script>
+</body>
+</html>

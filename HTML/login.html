@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MEU OUTRO PAR</title>
+    <link rel="stylesheet" href="/CSS/login.css">
+</head>
+<body>
+    <header>
+        <h1>MEU OUTRO PAR</h1>
+        <p class="tagline">Conectando quem precisa com quem tem</p>
+    </header>
+
+    <nav role="navigation">
+        <ul>
+            <li><a href="/index.html">Sobre</a></li>
+            <li><a href="/HTML/compra.html">Compra</a></li>
+            <li><a href="/HTML/venda.html">Venda</a></li>
+            <li><a href="/HTML/login.html" aria-current="page">Login</a></li>
+            <li><a href="/HTML/cadastro.html">Cadastro</a></li>
+            <li><a href="/HTML/meus-anuncios.html">Meus anúncios</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div id="feedback-message" class="feedback" style="display: none;"></div>
+        
+        <div id="login-container">
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required>
+                    <small class="erro-msg" style="color: red; display: none;"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="senha">Senha:</label>
+                    <input type="password" id="senha" required>
+                    <small class="erro-msg" style="color: red; display: none;"></small>
+                </div>
+
+                <button type="submit" class="btn-submit">Entrar</button>
+                <p class="texto-link">Não tem conta? <a href="cadastro.html">Cadastre-se</a></p>
+            </form>
+            
+            <div id="logged-in-options" class="logged-in-options" style="display: none;">
+                <p>Você já está logado!</p>
+                <button id="btn-logout" class="btn-logout">Sair da Conta</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Verifica se já está logado
+        document.addEventListener('DOMContentLoaded', function() {
+            const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+            const loginForm = document.getElementById('login-form');
+            const loggedInOptions = document.getElementById('logged-in-options');
+            
+            if (usuarioLogado) {
+                mostrarFeedback('Você já está logado como ' + usuarioLogado.email, 'sucesso');
+                loginForm.style.display = 'none';
+                loggedInOptions.style.display = 'block';
+            }
+        });
+
+        // Função para mostrar feedback
+        function mostrarFeedback(mensagem, tipo) {
+            const feedback = document.getElementById('feedback-message');
+            feedback.textContent = mensagem;
+            feedback.className = `feedback ${tipo}`;
+            feedback.style.display = 'block';
+            
+            if (tipo === 'sucesso') {
+                setTimeout(() => {
+                    feedback.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        // Validação do formulário
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Limpa mensagens anteriores
+            document.querySelectorAll('.erro-msg').forEach(el => {
+                el.style.display = 'none';
+                el.textContent = '';
+            });
+            
+            document.querySelectorAll('input').forEach(input => {
+                input.classList.remove('campo-invalido');
+            });
+
+            const email = document.getElementById('email').value.trim().toLowerCase();
+            const senha = document.getElementById('senha').value;
+            
+            // Validações básicas
+            let valido = true;
+            
+            if (!email) {
+                mostrarErroCampo('email', 'Por favor, informe seu email');
+                valido = false;
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                mostrarErroCampo('email', 'Email inválido');
+                valido = false;
+            }
+            
+            if (!senha) {
+                mostrarErroCampo('senha', 'Por favor, informe sua senha');
+                valido = false;
+            } else if (senha.length < 6) {
+                mostrarErroCampo('senha', 'Senha deve ter no mínimo 6 caracteres');
+                valido = false;
+            }
+            
+            if (!valido) return;
+
+            // Busca usuário
+            const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+            const usuario = usuarios.find(u => u.email === email && u.senha === senha);
+
+            if (usuario) {
+                // Verifica se tem WhatsApp cadastrado (importante para o botão Tenho Interesse)
+                if (!usuario.whatsapp) {
+                    mostrarFeedback('Seu cadastro não tem WhatsApp associado. Por favor, atualize seus dados.', 'erro');
+                    return;
+                }
+                
+                // Salva usuário logado
+                localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
+                
+                // Feedback e redirecionamento
+                mostrarFeedback('Login realizado com sucesso! Redirecionando...', 'sucesso');
+                setTimeout(() => {
+                    window.location.href = '/HTML/compra.html';
+                }, 1500);
+            } else {
+                mostrarFeedback('Email ou senha incorretos', 'erro');
+            }
+        });
+
+        // Função auxiliar para mostrar erro em um campo
+        function mostrarErroCampo(campoId, mensagem) {
+            const campo = document.getElementById(campoId);
+            const erroMsg = campo.parentElement.querySelector('.erro-msg');
+            
+            campo.classList.add('campo-invalido');
+            erroMsg.textContent = mensagem;
+            erroMsg.style.display = 'block';
+        }
+
+        // Botão de logout
+        document.getElementById('btn-logout').addEventListener('click', function() {
+            localStorage.removeItem('usuarioLogado');
+            mostrarFeedback('Você saiu da sua conta.', 'sucesso');
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('logged-in-options').style.display = 'none';
+            
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500);
+        });
+    </script>
+    <footer role="contentinfo">
+        <p>&copy; <span id="current-year"></span> MEU OUTRO PAR. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

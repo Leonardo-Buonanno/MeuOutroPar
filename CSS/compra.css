@@ -1,0 +1,239 @@
+/* compra.css - Estilos para a página de compra */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #e74c3c;
+    --accent-color: #3498db;
+    --text-color: #333;
+    --light-bg: #f9f9f9;
+    --white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.7;
+    color: var(--text-color);
+    background-color: var(--light-bg);
+}
+
+/* Cabeçalho */
+header {
+    background: linear-gradient(135deg, var(--primary-color), #1a252f);
+    color: var(--white);
+    text-align: center;
+    padding: 2rem 1rem;
+    position: relative;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.tagline {
+    font-style: italic;
+    opacity: 0.9;
+}
+
+/* Navegação */
+nav {
+    background-color: var(--secondary-color);
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+nav a:hover, nav a[aria-current="page"] {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+.compra-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+}
+
+.compra-title {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e74c3c;
+}
+
+.filtros {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.filtro-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.filtro-group label {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.filtro-group select {
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.btn-filtrar {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-filtrar:hover {
+    background-color: #2980b9;
+}
+
+.lista-calcados {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.calcado-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.calcado-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.calcado-imagem {
+    height: 200px;
+    overflow: hidden;
+}
+
+.calcado-imagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.calcado-info {
+    padding: 1.5rem;
+}
+
+.calcado-info h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.calcado-info p {
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.btn-interesse {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 1rem;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.btn-interesse:hover {
+    background-color: #c0392b;
+}
+
+.sem-resultados {
+    text-align: center;
+    grid-column: 1 / -1;
+    padding: 2rem;
+    color: #7f8c8d;
+}
+
+@media (max-width: 768px) {
+    .filtros {
+        flex-direction: column;
+    }
+    
+    .lista-calcados {
+        grid-template-columns: 1fr;
+    }
+}
+.feedback {
+    padding: 15px;
+    margin: 20px auto;
+    max-width: 800px;
+    border-radius: 4px;
+    text-align: center;
+    animation: fadeIn 0.5s;
+}
+
+.feedback.erro {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.btn-interesse {
+    background-color: #25D366;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-interesse:hover {
+    background-color: #128C7E;
+}
+/* Rodapé */
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    background: var(--primary-color);
+    color: var(--white);
+}

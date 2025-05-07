@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Plataforma para compra e venda de calçados individuais para pessoas com necessidades especiais">
+    <title>Meu Outro Par - Conectando necessidades especiais</title>
+    <link rel="stylesheet" href="/CSS/index.css">
+</head>
+<body>
+    <header role="banner">
+        <h1>MEU OUTRO PAR</h1>
+        <p class="tagline">Conectando quem precisa com quem tem</p>
+    </header>
+    
+    <nav role="navigation">
+        <ul>
+            <li><a href="/index.html" aria-current="page">Sobre</a></li>
+            <li><a href="/HTML/compra.html">Compra</a></li>
+            <li><a href="/HTML/venda.html">Venda</a></li>
+            <li><a href="/HTML/login.html">Login</a></li>
+            <li><a href="/HTML/cadastro.html">Cadastro</a></li>
+            <li><a href="/HTML/meus-anuncios.html">Meus anúncios</a></li>
+        </ul>
+    </nav>
+    
+    <main role="main">
+        <section aria-labelledby="sobre-nos">
+            <h2 id="sobre-nos">Sobre Nós</h2>
+            <div class="text-content">
+                <p>Este site foi criado especialmente para pessoas que perderam membros inferiores e, ao comprarem um par de calçados, acabam utilizando apenas um dos pés.</p>
+                
+                <p>Sabemos como isso pode gerar desperdício e gastos desnecessários. Pensando nisso, desenvolvemos uma plataforma que conecta pessoas com a mesma necessidade: vender ou comprar apenas um dos calçados do par.</p>
+                
+                <p>Aqui, você pode encontrar ou anunciar o calçado que precisa — seja do pé direito ou esquerdo — de forma simples, prática e acessível. Mais do que uma solução econômica, este espaço promove inclusão, sustentabilidade e comunidade.</p>
+                
+                <p>Seja bem-vindo(a) e sinta-se à vontade para fazer parte dessa iniciativa que dá um novo propósito para cada par incompleto!</p>
+            </div>
+        </section>
+        
+        <section aria-labelledby="servicos">
+            <h2 id="servicos">Nossos Serviços</h2>
+            <ul class="services">
+                <li><span class="icon">👞</span> Venda de calçados individuais</li>
+                <li><span class="icon">👟</span> Compra de calçados específicos</li>
+                <li><span class="icon">🤝</span> Conexão entre pessoas com necessidades similares</li>
+            </ul>
+        </section>
+    </main>
+    
+    <footer role="contentinfo">
+        <p>&copy; <span id="current-year"></span> MEU OUTRO PAR. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

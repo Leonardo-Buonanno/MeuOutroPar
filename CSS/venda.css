@@ -1,0 +1,278 @@
+/* venda.css - Estilos específicos para a página de venda */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #e74c3c;
+    --accent-color: #3498db;
+    --text-color: #333;
+    --light-bg: #f9f9f9;
+    --white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.7;
+    color: var(--text-color);
+    background-color: var(--light-bg);
+}
+
+/* Cabeçalho */
+header {
+    background: linear-gradient(135deg, var(--primary-color), #1a252f);
+    color: var(--white);
+    text-align: center;
+    padding: 2rem 1rem;
+    position: relative;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.tagline {
+    font-style: italic;
+    opacity: 0.9;
+}
+
+/* Navegação */
+nav {
+    background-color: var(--secondary-color);
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+nav a:hover, nav a[aria-current="page"] {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+/* Container principal do formulário */
+.venda-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Título da página */
+.venda-title {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e74c3c;
+}
+
+/* Grupos de formulário */
+.form-group {
+    margin-bottom: 1.8rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 1.1rem;
+}
+
+/* Campos de entrada */
+.form-control {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+/* Área de upload de arquivos */
+.file-upload-area {
+    border: 2px dashed #bdc3c7;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.file-upload-area:hover {
+    border-color: #3498db;
+    background-color: #f8f9fa;
+}
+
+.file-upload-icon {
+    font-size: 2.5rem;
+    color: #7f8c8d;
+    margin-bottom: 1rem;
+}
+
+.file-upload-text {
+    color: #7f8c8d;
+    margin-bottom: 0.5rem;
+}
+
+.file-upload-info {
+    font-size: 0.9rem;
+    color: #95a5a6;
+}
+
+/* Pré-visualização da imagem */
+.image-preview {
+    max-width: 200px;
+    max-height: 200px;
+    margin: 1rem auto;
+    display: block;
+    border-radius: 4px;
+}
+
+/* Botão de envio */
+.btn-submit {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-submit:hover {
+    background-color: #c0392b;
+}
+
+/* Mensagens de validação */
+.validation-message {
+    color: #e74c3c;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    display: none;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .venda-container {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+    
+    .venda-title {
+        font-size: 1.5rem;
+    }
+    
+    .form-group label {
+        font-size: 1rem;
+    }
+}
+
+/* Estilo para selects personalizados */
+.select-wrapper {
+    position: relative;
+}
+
+.select-wrapper::after {
+    content: "▼";
+    font-size: 0.8rem;
+    color: #7f8c8d;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+/* Estilo para campos numéricos */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.feedback {
+    padding: 15px;
+    margin: 20px auto;
+    max-width: 800px;
+    border-radius: 4px;
+    text-align: center;
+    animation: fadeIn 0.5s;
+}
+
+.feedback.sucesso {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.feedback.erro {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.campo-invalido {
+    border-color: #dc3545 !important;
+}
+
+#mensagem-login {
+    display: none;
+    padding: 15px;
+    margin: 20px auto;
+    max-width: 800px;
+    background-color: #fff3cd;
+    color: #856404;
+    border-radius: 4px;
+    text-align: center;
+    border: 1px solid #ffeeba;
+}
+/* Rodapé */
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    background: var(--primary-color);
+    color: var(--white);
+}

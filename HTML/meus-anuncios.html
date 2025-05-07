@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Anúncios</title>
+    <link rel="stylesheet" href="/CSS/meus-anuncios.css">
+</head>
+<body>
+    <header>
+        <h1>MEU OUTRO PAR</h1>
+        <p class="tagline">Conectando quem precisa com quem tem</p>
+    </header>
+
+    <nav role="navigation">
+        <ul>
+            <li><a href="/index.html">Sobre</a></li>
+            <li><a href="/HTML/compra.html">Compra</a></li>
+            <li><a href="/HTML/venda.html">Venda</a></li>
+            <li><a href="/HTML/login.html">Login</a></li>
+            <li><a href="/HTML/cadastro.html">Cadastro</a></li>
+            <li><a href="/HTML/meus-anuncios.html" aria-current="page">Meus anúncios</a></li>
+        </ul>
+    </nav>
+
+    <div id="form-edicao" class="form-container" style="display: none;">
+        <h3>Editar Anúncio</h3>
+        <form id="editar-form">
+            <input type="hidden" id="edit-id">
+            <label for="edit-modelo">Modelo:</label>
+            <input type="text" id="edit-modelo" required>
+    
+            <label for="edit-valor">Valor (R$):</label>
+            <input type="number" id="edit-valor" required>
+    
+            <button type="submit">Salvar</button>
+            <button type="button" id="cancelar-edicao">Cancelar</button>
+        </form>
+    </div>
+    
+
+    <main>
+        <div id="lista-anuncios">
+            <!-- Anúncios carregados via JavaScript -->
+        </div>
+        <div id="mensagem-acesso" class="mensagem-acesso" style="display: none;"></div>
+    </main>
+
+    <script>
+        const usuario = JSON.parse(localStorage.getItem('usuarioLogado'));
+    
+        if (!usuario) {
+            const mensagem = document.getElementById('mensagem-acesso');
+            mensagem.innerHTML = `
+                <p>Você precisa estar logado para acessar seus anúncios.</p>
+                <p><a href="/HTML/login.html">Clique aqui para fazer login</a></p>
+            `;
+            mensagem.style.display = 'block';
+            document.getElementById('lista-anuncios').style.display = 'none';
+        } else {
+            carregarMeusAnuncios();
+        }
+    
+        function carregarMeusAnuncios() {
+            const anuncios = JSON.parse(localStorage.getItem('anunciosCalcados')) || [];
+            const meusAnuncios = anuncios.filter(anuncio => anuncio.usuarioEmail === usuario.email);
+    
+            const listaAnuncios = document.getElementById('lista-anuncios');
+            listaAnuncios.innerHTML = '';
+    
+            if (meusAnuncios.length === 0) {
+                listaAnuncios.innerHTML = '<p>Você ainda não tem anúncios publicados.</p>';
+            }
+    
+            meusAnuncios.forEach(anuncio => {
+                const anuncioElement = document.createElement('div');
+                anuncioElement.className = 'anuncio-card';
+                anuncioElement.innerHTML = `
+                    <h3>${anuncio.modelo}</h3>
+                    <p>Preço: R$ ${anuncio.valor}</p>
+                    <button class="btn-editar" data-id="${anuncio.id}">Editar</button>
+                    <button class="btn-remover" data-id="${anuncio.id}">Remover</button>
+                `;
+                listaAnuncios.appendChild(anuncioElement);
+            });
+        }
+    
+        document.getElementById('lista-anuncios').addEventListener('click', function(e) {
+    if (e.target.classList.contains('btn-editar')) {
+        const anuncioId = Number(e.target.getAttribute('data-id'));
+        console.log("Clicou no botão EDITAR do anúncio ID:", anuncioId);
+
+        const anuncios = JSON.parse(localStorage.getItem('anunciosCalcados')) || [];
+        console.log("Todos anúncios salvos:", anuncios);
+
+        const anuncio = anuncios.find(a => Number(a.id) === anuncioId);
+
+        if (anuncio) {
+            alert(`Abrir formulário de edição para o anúncio: ${anuncio.modelo}`);
+        } else {
+            alert("Anúncio não encontrado.");
+        }
+    }
+});
+
+        carregarMeusAnuncios();
+
+        document.getElementById('lista-anuncios').addEventListener('click', function(e) {
+    if (e.target.classList.contains('btn-editar')) {
+        const anuncioId = Number(e.target.getAttribute('data-id'));
+        const anuncios = JSON.parse(localStorage.getItem('anunciosCalcados')) || [];
+        const anuncio = anuncios.find(a => Number(a.id) === anuncioId);
+
+        if (anuncio) {
+            document.getElementById('form-edicao').style.display = 'block';
+            document.getElementById('edit-id').value = anuncio.id;
+            document.getElementById('edit-modelo').value = anuncio.modelo;
+            document.getElementById('edit-valor').value = anuncio.valor;
+        }
+    }
+
+    if (e.target.classList.contains('btn-remover')) {
+        const anuncioId = Number(e.target.getAttribute('data-id'));
+        let anuncios = JSON.parse(localStorage.getItem('anunciosCalcados')) || [];
+        anuncios = anuncios.filter(a => Number(a.id) !== anuncioId);
+        localStorage.setItem('anunciosCalcados', JSON.stringify(anuncios));
+        carregarMeusAnuncios();
+    }
+});
+
+document.getElementById('editar-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const id = Number(document.getElementById('edit-id').value);
+    const modelo = document.getElementById('edit-modelo').value;
+    const valor = document.getElementById('edit-valor').value;
+
+    let anuncios = JSON.parse(localStorage.getItem('anunciosCalcados')) || [];
+    const index = anuncios.findIndex(a => Number(a.id) === id);
+
+    if (index !== -1) {
+        anuncios[index].modelo = modelo;
+        anuncios[index].valor = valor;
+        localStorage.setItem('anunciosCalcados', JSON.stringify(anuncios));
+        carregarMeusAnuncios();
+        document.getElementById('form-edicao').style.display = 'none';
+    }
+});
+
+document.getElementById('cancelar-edicao').addEventListener('click', function() {
+    document.getElementById('form-edicao').style.display = 'none';
+});
+
+    </script>
+    <footer role="contentinfo">
+        <p>&copy; <span id="current-year"></span> MEU OUTRO PAR. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>    
+</body>
+</html>
+
