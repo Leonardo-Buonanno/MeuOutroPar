@@ -1,4 +1,4 @@
-##🥿 Meu Outro Par
+#🥿 Meu Outro Par
 
 Meu Outro Par é um projeto com propósito social que nasceu para ajudar pessoas que possuem apenas uma perna e enfrentam dificuldades ao comprar calçados.
 
