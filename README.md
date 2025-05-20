@@ -20,8 +20,6 @@ Muitas pessoas amputadas acabam acumulando calçados inutilizados ou pagando por
 - CSS3  
 - JavaScript  
 
-> (Adicione aqui outras tecnologias caso esteja usando, como React, Next.js, Tailwind, Node.js, etc.)
-
 ## 📄 Licença
 
 Este projeto está licenciado sob a [MIT License](LICENSE).
