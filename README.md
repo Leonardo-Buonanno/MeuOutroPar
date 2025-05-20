@@ -20,10 +20,6 @@ Muitas pessoas amputadas acabam acumulando calçados inutilizados ou pagando por
 - CSS3  
 - JavaScript  
 
-## 📄 Licença
-
-Este projeto está licenciado sob a [MIT License](LICENSE).
-
 ---
 
 Feito com 💙 pensando na inclusão de todos.
